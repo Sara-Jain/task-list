@@ -16,7 +16,7 @@ const ListDetails = ({listData}) => {
             <div>
                 <h1>{list.name}</h1>
                 <button
-                    onClick={() => navigate(`${TASKS_ROUTE}/create`)}>
+                    onClick={() => navigate(`${LISTS_ROUTE}/${list.id}${TASKS_ROUTE}/create`)}>
                     Add new Task</button>
             </div>
             <ul>

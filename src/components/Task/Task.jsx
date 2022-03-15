@@ -9,11 +9,16 @@ const Task = ({ listData, setListData }) => {
     const list = listData.find(
         (listItem) => listItem.id === parseInt(listId)
     );
-    const task = list.tasks.find(
+    let task = list.tasks.find(
         (taskItem) => taskItem.id === parseInt(taskId)
     );
 
+    if(!task) {
+        task={}; 
+    }
+
     const [selectedTask, setSelectedTask] = useState(task);
+   // const [method, setMethod] = useState('edit');
 
     const taskTitleHandler = (event) => {
         setSelectedTask({
@@ -22,22 +27,28 @@ const Task = ({ listData, setListData }) => {
         });
     };
 
-
-
     const saveButtonHandler = () => {
         const updatedListData = listData.map((list) => {
             if (list.id === parseInt(listId)) {
-                return {
-                    id:list.id,
-                    name: list.name,
-                    tasks: list.tasks.map((task) =>
-                        task.id === parseInt(taskId) ? selectedTask : task
-                    )
+                if (!taskId) {
+                    selectedTask.id = Math.floor(Math.random() * 100)
+                    return {
+                        ...list,
+                        tasks: [...list.tasks,selectedTask]
+                    }
+                }else{
+                    return {
+                        ...list,
+                        tasks: list.tasks.map((task) =>
+                            task.id === parseInt(taskId) ? selectedTask : task
+                        )
+                    }
                 }
             } else {
                 return list;
             }
         })
+        //console.log(updatedListData);
         setListData(updatedListData);
         navigate(`${LISTS_ROUTE}/${list.id}`);
     }
@@ -52,7 +63,7 @@ const Task = ({ listData, setListData }) => {
                 onClick={saveButtonHandler}
             >Save
             </button>
-            <button onClick={() =>  navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button>
+            <button onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button>
         </>
     )
 }
