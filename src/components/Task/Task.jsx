@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { LISTS_ROUTE, NOT_FOUND_ROUTE_ } from '../../constants/routes';
 import './Task.css'
