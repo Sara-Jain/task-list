@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { LISTS_ROUTE, NOT_FOUND_ROUTE_ } from '../../constants/routes';
+import { LISTS_ROUTE } from '../../constants/routes';
 import './Task.css'
 
 const Task = ({ listData, setListData }) => {
@@ -14,11 +14,10 @@ const Task = ({ listData, setListData }) => {
     );
 
     if(!task) {
-        task={}; 
+        task={title: 'Enter a task'}; 
     }
 
     const [selectedTask, setSelectedTask] = useState(task);
-   // const [method, setMethod] = useState('edit');
 
     const taskTitleHandler = (event) => {
         setSelectedTask({
