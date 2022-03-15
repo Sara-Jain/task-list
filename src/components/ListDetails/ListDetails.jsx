@@ -1,30 +1,36 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { useNavigate,useParams } from 'react-router-dom';
+import { LISTS_ROUTE , TASKS_ROUTE ,NOT_FOUND_ROUTE } from '../../constants/routes';
 import './ListDetails.css'
 
 
-const ListDetails = (props) => {
-    const list = props.selectedList;
-    // console.log(list);
+const ListDetails = ({listData}) => {
+   const navigate = useNavigate();
+   const {listId} = useParams();
+   const list = listData.find(
+    (listItem) => listItem.id === parseInt(listId)
+  );
+
     return (
         <>
             <div>
                 <h1>{list.name}</h1>
                 <button
-                    onClick={() => props.onAddNewTask()}>
+                    onClick={() => navigate(`${TASKS_ROUTE}/create`)}>
                     Add new Task</button>
             </div>
             <ul>
-                {list.tasks.map((item) => {
-                    return <li key={item.id}>
-                        {item.title}
+                {list.tasks.map((task) => {
+                    return <li key={task.id}>
+                        {task.title}
                         <button
-                            onClick={() => props.onEditTask(item)}>
+                            onClick={() => navigate(`${LISTS_ROUTE}/${list.id}${TASKS_ROUTE}/${task.id}`)}>
                             Edit
                         </button>
                     </li>
                 })}
             </ul>
-            <button onClick={() => props.onClickBack()}>Back</button>
+            <button onClick={() =>  navigate(`${LISTS_ROUTE}`)}>Back</button>
         </>
     )
 }

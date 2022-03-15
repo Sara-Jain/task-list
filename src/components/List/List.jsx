@@ -1,37 +1,42 @@
 import React, { useState } from "react";
-import './List.css'
+import { LISTS_ROUTE } from "../../constants/routes";
+import { useNavigate } from "react-router-dom";
+import './List.css';
 
-const List = (props) => {
-    const [newList, setNewList] = useState('');
+const List = ({ listData, setListData }) => {
+    const [newListName, setNewListName] = useState('');
+    const navigate = useNavigate();
 
     const listChangeHandler = (event) => {
-        setNewList(event.target.value);
+        setNewListName(event.target.value);
     }
 
     const addListHandler = () => {
         const addedList = {
             id: Math.floor(Math.random() * 100),
-            name: newList,
+            name: newListName,
             tasks: []
         }
-        props.onListChangeHandler(addedList);
-        setNewList('');
+        setListData((prevState) => [...prevState, addedList])
+        setNewListName('');
     }
 
     return (
         <>
-            <input value={newList} onChange={listChangeHandler}></input>
+            <input value={newListName} onChange={listChangeHandler}></input>
             <button onClick={addListHandler}>Add new list</button>
             <div>Lists</div>
             <ul>
-                {props.listData.map((item) => {
-                    return <li key={item.id}>
-                        {item.name}
+                {listData.map((list) => {
+                    return (<li key={list.id}>
+                        {list.name}
                         <button
-                            onClick={()=>props.onViewTasks(item)}>
+                            onClick={() => {
+                                navigate(`${LISTS_ROUTE}/${list.id}`);
+                            }}>
                             View Tasks
                         </button>
-                    </li>
+                    </li>);
                 })}
             </ul>
         </>
