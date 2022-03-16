@@ -1,70 +1,82 @@
-import React, { useState } from 'react'
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-shadow */
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { LISTS_ROUTE } from '../../constants/routes';
-import './Task.css'
+import './Task.css';
 
-const Task = ({ listData, setListData }) => {
-    const navigate = useNavigate();
-    const { listId, taskId } = useParams();
-    const list = listData.find(
-        (listItem) => listItem.id === parseInt(listId)
-    );
-    let task = list.tasks.find(
-        (taskItem) => taskItem.id === parseInt(taskId)
-    );
+function Task({ listData, setListData }) {
+  const navigate = useNavigate();
+  const { listId, taskId } = useParams();
+  const list = listData.find(
+    (listItem) => listItem.id === parseInt(listId, 10),
+  );
+  let task = list.tasks.find(
+    (taskItem) => taskItem.id === parseInt(taskId, 10),
+  );
 
-    if(!task) {
-        task={title: 'Enter a task'}; 
-    }
+  if (!task) {
+    task = { title: 'Enter a task' };
+  }
 
-    const [selectedTask, setSelectedTask] = useState(task);
+  const [selectedTask, setSelectedTask] = useState(task);
 
-    const taskTitleHandler = (event) => {
-        setSelectedTask({
-            ...selectedTask,
-            title: event.target.value
-        });
-    };
+  const taskTitleHandler = (event) => {
+    setSelectedTask({
+      ...selectedTask,
+      title: event.target.value,
+    });
+  };
 
-    const saveButtonHandler = () => {
-        const updatedListData = listData.map((list) => {
-            if (list.id === parseInt(listId)) {
-                if (!taskId) {
-                    selectedTask.id = Math.floor(Math.random() * 100)
-                    return {
-                        ...list,
-                        tasks: [...list.tasks,selectedTask]
-                    }
-                }else{
-                    return {
-                        ...list,
-                        tasks: list.tasks.map((task) =>
-                            task.id === parseInt(taskId) ? selectedTask : task
-                        )
-                    }
-                }
-            } else {
-                return list;
-            }
-        })
-        //console.log(updatedListData);
-        setListData(updatedListData);
-        navigate(`${LISTS_ROUTE}/${list.id}`);
-    }
+  const saveButtonHandler = () => {
+    const updatedListData = listData.map((list) => {
+      if (list.id === parseInt(listId, 10)) {
+        if (!taskId) {
+          selectedTask.id = Math.floor(Math.random() * 100);
+          return {
+            ...list,
+            tasks: [...list.tasks, selectedTask],
+          };
+        }
+        return {
+          ...list,
+          tasks: list.tasks.map((task) => (task.id === parseInt(taskId, 10) ? selectedTask : task)),
+        };
+      }
+      return list;
+    });
+    setListData(updatedListData);
+    navigate(`${LISTS_ROUTE}/${list.id}`);
+  };
 
-    return (
-        <>
-            <input
-                value={selectedTask.title}
-                onChange={taskTitleHandler}
-            ></input>
-            <button
-                onClick={saveButtonHandler}
-            >Save
-            </button>
-            <button onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button>
-        </>
-    )
+  return (
+    <>
+      <input
+        value={selectedTask.title}
+        onChange={taskTitleHandler}
+      />
+      <button
+        onClick={saveButtonHandler}
+        type="button"
+      >
+        Save
+      </button>
+      <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button>
+    </>
+  );
 }
+
+Task.propTypes = {
+  listData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    tasks: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+    })),
+  })).isRequired,
+  setListData: PropTypes.func.isRequired,
+};
 
 export default Task;
