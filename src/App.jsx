@@ -9,6 +9,7 @@ import Root from './components/Root/Root';
 import AddOrEditList from './components/AddOrEditList/AddOrEditList';
 import LISTS from './constants/list';
 import { LISTS_ROUTE, TASKS_ROUTE, ROOT_ROUTE } from './constants/routes';
+import UseEffectExample from './components/UseEffectExample/UseEffectExample';
 
 function App() {
   const [listData, setListData] = useState(LISTS);
@@ -30,6 +31,8 @@ function App() {
           <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/create`} element={<Task listData={listData} setListData={setListData} />} />
           {/* edit a task */}
           <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/:taskId/edit`} element={<Task listData={listData} setListData={setListData} />} />
+
+          <Route path="/examples/use-effect" element={<UseEffectExample />} />
 
           <Route path="*" element={<div>404!Error. Page not found</div>} />
         </Routes>
