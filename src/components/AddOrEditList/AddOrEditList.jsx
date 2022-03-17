@@ -14,13 +14,16 @@ function AddOrEditList({ listData, setListData }) {
 
   if (!list) list = { name: 'Enter a list name' };
 
-  const [selectedList, setSelectedList] = useState(list);
+  const
+    [selectedList, setSelectedList] = useState(list);
 
   const listTitleHandler = (event) => {
-    setSelectedList({
-      ...selectedList,
-      name: event.target.value,
-    });
+    setSelectedList(
+      {
+        ...selectedList,
+        name: event.target.value,
+      },
+    );
   };
 
   const saveButtonHandler = () => {

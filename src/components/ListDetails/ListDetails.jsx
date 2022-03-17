@@ -29,7 +29,7 @@ function ListDetails({ listData }) {
             {task.title}
             <button
               type="submit"
-              onClick={() => navigate(`${LISTS_ROUTE}/${list.id}${TASKS_ROUTE}/${task.id}`)}
+              onClick={() => navigate(`${LISTS_ROUTE}/${list.id}${TASKS_ROUTE}/${task.id}/edit`)}
             >
               Edit
             </button>

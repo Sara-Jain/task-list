@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { LISTS_ROUTE } from '../../constants/routes';
+import Button from '../Button/Button';
 import './Task.css';
 
 function Task({ listData, setListData }) {
@@ -56,13 +58,15 @@ function Task({ listData, setListData }) {
         value={selectedTask.title}
         onChange={taskTitleHandler}
       />
-      <button
+      <Button type="button" onClick={saveButtonHandler} buttonText="Save" />
+      {/* <button
         onClick={saveButtonHandler}
         type="button"
       >
         Save
-      </button>
-      <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button>
+      </button> */}
+      <Button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)} buttonText="Back" />
+      {/* <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button> */}
     </>
   );
 }

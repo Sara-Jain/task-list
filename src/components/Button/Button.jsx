@@ -1,29 +1,17 @@
-import React from "react";
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/prop-types */
+import React from 'react';
+// import PropTypes from 'prop-types';
 // dumb component to write simple test
 
-const Button = ({ onClick, buttonText }) => (
-  <button onClick={onClick}>{buttonText}</button>
-);
+function Button({ onClick, buttonText, type }) {
+  return <button type={type} onClick={onClick}>{buttonText}</button>;
+}
 
+// Button.PropTypes = {
+//   onClick: PropTypes.func.isRequired,
+//   buttonText: PropTypes.string.isRequired,
+
+// };
 
 export default Button;
-
-
-// const onSubmitting = (task) => {
-//   const updatedMockList = {
-//     name: selectedList.name,
-//     tasks: selectedList.tasks.map((item) => {
-//       if (item.id === task.id) {
-//         return task;
-//       } else {
-//         return item;
-//       }
-//     })
-//   };
-//   if (method === 'add') {
-//     task.id = Math.floor(Math.random() * 100)
-//     updatedMockList.tasks = [...updatedMockList.tasks, task]
-//   }
-//   setSelectedList(updatedMockList);
-//   setPage('listDetails');
-// }
