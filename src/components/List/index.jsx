@@ -1,46 +1,60 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/button-has-type */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { LISTS_ROUTE } from '../../constants/routes';
+import makeRequest from '../utils/makeRequest';
+import { GET_LIST_ENDPOINT } from '../../constants/apiEndpoints';
 // import Button from '../Button/Button';
 import './List.css';
 
+// eslint-disable-next-line no-unused-vars
 function List({ listData }) {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [responseData, setResponseData] = useState([]);
+
+  useEffect(() => {
+    makeRequest(GET_LIST_ENDPOINT).then((res) => {
+      console.log(res);
+      setResponseData(res);
+    });
+  }, []);
+
+  const availableLists = responseData.map((list) => (
+    <li key={list.id}>
+      {list.listName}
+      <button
+        type="button"
+        onClick={() => {
+          navigate(`${LISTS_ROUTE}/${list.id}`);
+        }}
+      >
+        View Tasks
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          navigate(`${LISTS_ROUTE}/${list.id}/edit`);
+        }}
+      >
+        Edit
+      </button>
+    </li>
+  ));
 
   return (
     <div className="listContainer">
       <div className="listHeader">
-        <button id="newListButton" onClick={() => navigate(`${LISTS_ROUTE}/create`)}>Create list</button>
+        <button type="button" onClick={() => navigate(`${LISTS_ROUTE}/create`)}>Create list</button>
       </div>
-      <ul>
-        <div>Lists</div>
-        {
-          listData.map((list) => (
-            <div className="listItemContainer">
-              <li key={list.id}>
-                {list.name}
-                <button
-                  onClick={() => {
-                    navigate(`${LISTS_ROUTE}/${list.id}`);
-                  }}
-                >
-                  View Tasks
-                </button>
-                <button
-                  onClick={() => {
-                    navigate(`${LISTS_ROUTE}/${list.id}/edit`);
-                  }}
-                >
-                  Edit
-                </button>
-              </li>
-            </div>
-          ))
-        }
-      </ul>
+      <main>
+        <div className="listHeading">Lists</div>
+        <div className="listItemContainer">
+          {availableLists}
+        </div>
+      </main>
     </div>
   );
 }
