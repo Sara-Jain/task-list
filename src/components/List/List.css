@@ -1,10 +1,10 @@
 .listContainer {
-    background-color: rgb(223, 207, 238);
+    background-color: #C0C0F2;
     height:860px;
 }
 
 .listHeader {
-    background-color: rgb(124, 52, 172);
+    background-color: #9A9AEB;
     height:200px;
 }
 
@@ -23,7 +23,6 @@
 
 .listItemContainer {
     margin-top:10px;
-    display:flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
@@ -35,7 +34,7 @@
         height:100%;
     }
     .listHeader {
-        background-color: rgb(124, 52, 172);
+        background-color: #9A9AEB;
         width:100%;
     }
     .listHeader Button {
