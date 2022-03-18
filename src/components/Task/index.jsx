@@ -1,55 +1,82 @@
-/* eslint-disable max-len */
-/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { LISTS_ROUTE } from '../../constants/routes';
+import makeRequest from '../utils/makeRequest';
+import { editTaskEndpoint, createTaskEndpoint, getTasksOfListEndpoint } from '../../constants/apiEndpoints';
 import Button from '../Button/Button';
 import './Task.css';
 
-function Task({ listData, setListData }) {
+function Task() {
   const navigate = useNavigate();
   const { listId, taskId } = useParams();
-  const list = listData.find(
-    (listItem) => listItem.id === parseInt(listId, 10),
-  );
-  let task = list.tasks.find(
-    (taskItem) => taskItem.id === parseInt(taskId, 10),
-  );
-
-  if (!task) {
-    task = { title: 'Enter a task' };
-  }
-
+  const [method, setMethod] = useState('add');
+  const [responseData, setResponseData] = useState([]);
+  const [addTask, setAddTask] = useState(false);
+  const [editTask, setEditTask] = useState(false);
+  let task = { title: 'Enter a task title' };
   const [selectedTask, setSelectedTask] = useState(task);
 
-  const taskTitleHandler = (event) => {
-    setSelectedTask({
-      ...selectedTask,
-      title: event.target.value,
+  useEffect(() => {
+    makeRequest(getTasksOfListEndpoint(listId)).then((res) => {
+      setResponseData(res);
+    }).then(() => {
+      if (responseData.length === 0) task = { title: 'Enter a task title' };
+      else {
+        task = responseData.find(
+          (taskItem) => taskItem.id === parseInt(taskId, 10),
+        );
+      }
+    }).then(() => {
+      setResponseData(task);
     });
+  }, []);
+
+  useEffect(() => {
+    if (taskId) {
+      setMethod('edit');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (addTask) {
+      makeRequest(createTaskEndpoint(listId), {
+        title: selectedTask.title,
+      }).then(() => {
+        setAddTask(false);
+        navigate(`${LISTS_ROUTE}/${listId}`);
+      });
+    }
+  }, [addTask]);
+
+  useEffect(() => {
+    if (editTask) {
+      makeRequest(editTaskEndpoint(listId, taskId), {
+        title: selectedTask.title,
+      }).then(() => {
+        setEditTask(false);
+        navigate(`${LISTS_ROUTE}/${listId}`);
+      });
+    }
+  }, [editTask]);
+
+  const taskTitleHandler = (event) => {
+    setSelectedTask(
+      {
+        ...selectedTask,
+        title: event.target.value,
+      },
+    );
   };
 
   const saveButtonHandler = () => {
-    const updatedListData = listData.map((list) => {
-      if (list.id === parseInt(listId, 10)) {
-        if (!taskId) {
-          selectedTask.id = Math.floor(Math.random() * 100);
-          return {
-            ...list,
-            tasks: [...list.tasks, selectedTask],
-          };
-        }
-        return {
-          ...list,
-          tasks: list.tasks.map((task) => (task.id === parseInt(taskId, 10) ? selectedTask : task)),
-        };
-      }
-      return list;
-    });
-    setListData(updatedListData);
-    navigate(`${LISTS_ROUTE}/${list.id}`);
+    if (method === 'add') {
+      setAddTask(true);
+    } else {
+      setEditTask(true);
+    }
   };
 
   return (
@@ -65,22 +92,24 @@ function Task({ listData, setListData }) {
       >
         Save
       </button> */}
-      <Button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)} buttonText="Back" />
-      {/* <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button> */}
+      <Button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${listId}`)} buttonText="Back" />
+      {/* <button
+      type="submit"
+      onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button> */}
     </>
   );
 }
 
-Task.propTypes = {
-  listData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    tasks: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-    })),
-  })).isRequired,
-  setListData: PropTypes.func.isRequired,
-};
+// Task.propTypes = {
+//   listData: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//     name: PropTypes.string.isRequired,
+//     tasks: PropTypes.arrayOf(PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       title: PropTypes.string.isRequired,
+//     })),
+//   })).isRequired,
+//   setListData: PropTypes.func.isRequired,
+// };
 
 export default Task;

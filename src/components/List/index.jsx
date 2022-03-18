@@ -15,7 +15,6 @@ function List() {
       setResponseData(res);
     });
   }, []);
-  console.log(responseData);
 
   const availableLists = responseData.map((list) => (
     <li key={list.id}>

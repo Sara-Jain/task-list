@@ -9,13 +9,12 @@ import Root from './components/Root';
 import AddOrEditList from './components/AddOrEditList';
 import makeRequest from './components/utils/makeRequest';
 import { GET_LIST_ENDPOINT } from './constants/apiEndpoints';
-import LISTS from './constants/list';
 import { LISTS_ROUTE, TASKS_ROUTE, ROOT_ROUTE } from './constants/routes';
 
 function App() {
-  const [listData, setListData] = useState(LISTS);
   const [allListsData, setAllListsData] = useState([]);
   const [isInitialised, setIsInitialised] = useState(false);
+
   useEffect(async () => {
     if (!isInitialised) {
       makeRequest(GET_LIST_ENDPOINT).then((res) => {
@@ -24,6 +23,7 @@ function App() {
       setIsInitialised(true);
     }
   }, [isInitialised]);
+
   return (
     <div>
       <BrowserRouter>
@@ -33,15 +33,15 @@ function App() {
           {/* get all lists */}
           <Route path={LISTS_ROUTE} element={<List />} />
           {/* create a list */}
-          <Route path={`${LISTS_ROUTE}/create`} element={<AddOrEditList listData={allListsData} setListData={setAllListsData} />} />
+          <Route path={`${LISTS_ROUTE}/create`} element={<AddOrEditList listData={allListsData} />} />
           {/* edit a list */}
-          <Route path={`${LISTS_ROUTE}/:listId/edit`} element={<AddOrEditList listData={allListsData} setListData={setAllListsData} />} />
+          <Route path={`${LISTS_ROUTE}/:listId/edit`} element={<AddOrEditList listData={allListsData} />} />
           {/* get all tasks of a list */}
           <Route path={`${LISTS_ROUTE}/:listId`} element={<ListDetails />} />
           {/* create a new task */}
-          <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/create`} element={<Task listData={listData} setListData={setListData} />} />
+          <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/create`} element={<Task listData={allListsData} />} />
           {/* edit a task */}
-          <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/:taskId/edit`} element={<Task listData={listData} setListData={setListData} />} />
+          <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/:taskId/edit`} element={<Task listData={allListsData} />} />
 
           <Route path="*" element={<div>404!Error. Page not found</div>} />
         </Routes>

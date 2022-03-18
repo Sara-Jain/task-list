@@ -14,7 +14,6 @@ function ListDetails() {
 
   useEffect(() => {
     makeRequest(getTasksOfListEndpoint(listId)).then((res) => {
-      console.log(res);
       setResponseData(res);
     });
   }, []);

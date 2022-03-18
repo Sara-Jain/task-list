@@ -30,17 +30,17 @@ function AddOrEditList({ listData }) {
 
   useEffect(() => {
     if (addList) {
-      console.log('line 33');
       makeRequest(createListEndpoint, {
         listName: selectedList.listName,
+      }).then(() => {
+        setAddList(false);
+        navigate(`${LISTS_ROUTE}`);
       });
-      setAddList(false);
     }
   }, [addList]);
 
   useEffect(() => {
     if (editList) {
-      console.log('reaching here');
       makeRequest(editListEndpoint(listId), {
         listName: selectedList.listName,
       }).then(() => {
@@ -63,10 +63,8 @@ function AddOrEditList({ listData }) {
     if (method === 'add') {
       setAddList(true);
     } else {
-      console.log('method at line 63', method);
       setEditList(true);
     }
-    // navigate(`${LISTS_ROUTE}`);
   };
 
   return (
