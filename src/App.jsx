@@ -2,11 +2,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListDetails from './components/ListDetails/ListDetails';
-import Task from './components/Task/Task';
-import List from './components/List/List';
-import Root from './components/Root/Root';
-import AddOrEditList from './components/AddOrEditList/AddOrEditList';
+import ListDetails from './components/ListDetails';
+import Task from './components/Task';
+import List from './components/List';
+import Root from './components/Root';
+import AddOrEditList from './components/AddOrEditList';
 import LISTS from './constants/list';
 import { LISTS_ROUTE, TASKS_ROUTE, ROOT_ROUTE } from './constants/routes';
 
