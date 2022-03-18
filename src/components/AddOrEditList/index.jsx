@@ -1,58 +1,78 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import makeRequest from '../utils/makeRequest';
+import { createListEndpoint, editListEndpoint } from '../../constants/apiEndpoints';
 import { LISTS_ROUTE } from '../../constants/routes';
 import './AddOrEditList.css';
 
-function AddOrEditList({ listData, setListData }) {
+function AddOrEditList({ listData }) {
   const navigate = useNavigate();
   const { listId } = useParams();
+  const [method, setMethod] = useState('add');
+
+  const [addList, setAddList] = useState(false);
+  const [editList, setEditList] = useState(false);
+
   let list = listData.find(
     (listItem) => listItem.id === parseInt(listId, 10),
   );
 
   if (!list) list = { name: 'Enter a list name' };
+  const [selectedList, setSelectedList] = useState(list);
 
-  const
-    [selectedList, setSelectedList] = useState(list);
+  useEffect(() => {
+    if (listId) {
+      setMethod('edit');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (addList) {
+      console.log('line 33');
+      makeRequest(createListEndpoint, {
+        listName: selectedList.listName,
+      });
+      setAddList(false);
+    }
+  }, [addList]);
+
+  useEffect(() => {
+    if (editList) {
+      console.log('reaching here');
+      makeRequest(editListEndpoint(listId), {
+        listName: selectedList.listName,
+      }).then(() => {
+        setEditList(false);
+        navigate(`${LISTS_ROUTE}`);
+      });
+    }
+  }, [editList]);
 
   const listTitleHandler = (event) => {
     setSelectedList(
       {
         ...selectedList,
-        name: event.target.value,
+        listName: event.target.value,
       },
     );
   };
 
   const saveButtonHandler = () => {
-    if (!listId) {
-      const addedList = {
-        id: Math.floor(Math.random() * 100),
-        name: selectedList.name,
-        tasks: [],
-      };
-      setListData((prevState) => [...prevState, addedList]);
+    if (method === 'add') {
+      setAddList(true);
     } else {
-      const updatedListData = listData.map((listItem) => {
-        if (listItem.id === parseInt(listId, 10)) {
-          return {
-            ...listItem,
-            name: selectedList.name,
-          };
-        }
-        return listItem;
-      });
-      setListData(updatedListData);
+      console.log('method at line 63', method);
+      setEditList(true);
     }
-    navigate(`${LISTS_ROUTE}`);
+    // navigate(`${LISTS_ROUTE}`);
   };
 
   return (
     <>
       <input
-        value={selectedList.name}
+        value={selectedList.listName}
         onChange={listTitleHandler}
       />
       <button
@@ -65,17 +85,5 @@ function AddOrEditList({ listData, setListData }) {
     </>
   );
 }
-
-AddOrEditList.propTypes = {
-  listData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    tasks: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-    })),
-  })).isRequired,
-  setListData: PropTypes.func.isRequired,
-};
 
 export default AddOrEditList;

@@ -6,18 +6,16 @@ import { GET_LIST_ENDPOINT } from '../../constants/apiEndpoints';
 // import Button from '../Button/Button';
 import './List.css';
 
-// eslint-disable-next-line no-unused-vars
 function List() {
   const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
   const [responseData, setResponseData] = useState([]);
 
   useEffect(() => {
     makeRequest(GET_LIST_ENDPOINT).then((res) => {
-      console.log(res);
       setResponseData(res);
     });
   }, []);
+  console.log(responseData);
 
   const availableLists = responseData.map((list) => (
     <li key={list.id}>
