@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../../../constants/apiEndpoints';
 
-const makeRequest = async (apiEndpoint) => {
-  const { data } = await axios({ ...apiEndpoint, url: `${BACKEND_URL}${apiEndpoint.url}` });
+const makeRequest = async (apiEndpoint, dynamicConfig = {}) => {
+  const { data } = await axios({
+    ...apiEndpoint,
+    url: `${BACKEND_URL}${apiEndpoint.url}`,
+    data: {
+      ...dynamicConfig,
+    },
+  });
   return data;
 };
 

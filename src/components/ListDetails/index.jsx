@@ -2,13 +2,12 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { LISTS_ROUTE, TASKS_ROUTE } from '../../constants/routes';
 import './ListDetails.css';
 import { getTasksOfListEndpoint, GET_LIST_ENDPOINT } from '../../constants/apiEndpoints';
 import makeRequest from '../utils/makeRequest';
 
-function ListDetails({ listData }) {
+function ListDetails() {
   const navigate = useNavigate();
   const { listId } = useParams();
   const [responseData, setResponseData] = useState([]);
@@ -51,16 +50,5 @@ function ListDetails({ listData }) {
     </>
   );
 }
-
-ListDetails.propTypes = {
-  listData: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    tasks: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-    })),
-  })).isRequired,
-};
 
 export default ListDetails;

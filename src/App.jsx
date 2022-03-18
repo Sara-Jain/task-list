@@ -19,13 +19,13 @@ function App() {
           {/* root route */}
           <Route path={ROOT_ROUTE} element={<Root />} />
           {/* get all lists */}
-          <Route path={LISTS_ROUTE} element={<List listData={listData} />} />
+          <Route path={LISTS_ROUTE} element={<List />} />
           {/* create a list */}
           <Route path={`${LISTS_ROUTE}/create`} element={<AddOrEditList listData={listData} setListData={setListData} />} />
           {/* edit a list */}
           <Route path={`${LISTS_ROUTE}/:listId/edit`} element={<AddOrEditList listData={listData} setListData={setListData} />} />
           {/* get all tasks of a list */}
-          <Route path={`${LISTS_ROUTE}/:listId`} element={<ListDetails listData={listData} />} />
+          <Route path={`${LISTS_ROUTE}/:listId`} element={<ListDetails />} />
           {/* create a new task */}
           <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/create`} element={<Task listData={listData} setListData={setListData} />} />
           {/* edit a task */}

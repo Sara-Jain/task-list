@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { LISTS_ROUTE } from '../../constants/routes';
 import makeRequest from '../utils/makeRequest';
 import { GET_LIST_ENDPOINT } from '../../constants/apiEndpoints';
@@ -10,7 +7,7 @@ import { GET_LIST_ENDPOINT } from '../../constants/apiEndpoints';
 import './List.css';
 
 // eslint-disable-next-line no-unused-vars
-function List({ listData }) {
+function List() {
   const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
   const [responseData, setResponseData] = useState([]);
@@ -58,17 +55,5 @@ function List({ listData }) {
     </div>
   );
 }
-List.propTypes = {
-  listData: PropTypes.arrayOf(PropTypes.shape(
-    {
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      tasks: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-      })),
-    },
-  )).isRequired,
-};
 
 export default List;
