@@ -1,8 +1,5 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 import { LISTS_ROUTE } from '../../constants/routes';
 import makeRequest from '../utils/makeRequest';
 import { editTaskEndpoint, createTaskEndpoint, getTasksOfListEndpoint } from '../../constants/apiEndpoints';
@@ -99,17 +96,5 @@ function Task() {
     </>
   );
 }
-
-// Task.propTypes = {
-//   listData: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     name: PropTypes.string.isRequired,
-//     tasks: PropTypes.arrayOf(PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       title: PropTypes.string.isRequired,
-//     })),
-//   })).isRequired,
-//   setListData: PropTypes.func.isRequired,
-// };
 
 export default Task;

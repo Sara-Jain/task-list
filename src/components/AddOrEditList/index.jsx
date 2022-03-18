@@ -1,13 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import makeRequest from '../utils/makeRequest';
 import { createListEndpoint, editListEndpoint } from '../../constants/apiEndpoints';
 import { LISTS_ROUTE } from '../../constants/routes';
 import './AddOrEditList.css';
 
 function AddOrEditList({ listData }) {
+  console.log(listData);
   const navigate = useNavigate();
   const { listId } = useParams();
   const [method, setMethod] = useState('add');
@@ -83,5 +83,12 @@ function AddOrEditList({ listData }) {
     </>
   );
 }
+
+AddOrEditList.propTypes = {
+  listData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    listName: PropTypes.string.isRequired,
+  })).isRequired,
+};
 
 export default AddOrEditList;
