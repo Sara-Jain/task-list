@@ -50,7 +50,7 @@ function ListDetails({ listData }) {
         </button>
 
       </div>
-      <div className=" bottom-color" />
+      <div className="bottom-color" />
       <div className="display-container">
         <h1>{list.listName}</h1>
         <ul className="allTasks">

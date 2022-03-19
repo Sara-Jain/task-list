@@ -13,21 +13,17 @@ function Task() {
   const [responseData, setResponseData] = useState([]);
   const [addTask, setAddTask] = useState(false);
   const [editTask, setEditTask] = useState(false);
-  let task = { title: 'Enter a task title' };
-  const [selectedTask, setSelectedTask] = useState(task);
+  const [selectedTask, setSelectedTask] = useState({ title: '' });
 
   useEffect(() => {
     makeRequest(getTasksOfListEndpoint(listId)).then((res) => {
       setResponseData(res);
     }).then(() => {
-      if (responseData.length === 0) task = { title: 'Enter a task title' };
-      else {
-        task = responseData.find(
-          (taskItem) => taskItem.id === parseInt(taskId, 10),
-        );
-      }
-    }).then(() => {
-      setResponseData(task);
+      let task = responseData?.find(
+        (taskItem) => taskItem.id === parseInt(taskId, 10),
+      );
+      if (!task) task = { title: 'Enter Title' };
+      setSelectedTask(task);
     });
   }, []);
 

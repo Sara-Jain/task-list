@@ -19,7 +19,7 @@ function AddOrEditList({ listData }) {
     (listItem) => listItem.id === parseInt(listId, 10),
   );
 
-  if (!list) list = { name: 'Enter a list name' };
+  if (!list) list = { listName: 'Enter a list name' };
   const [selectedList, setSelectedList] = useState(list);
 
   useEffect(() => {
@@ -68,19 +68,39 @@ function AddOrEditList({ listData }) {
   };
 
   return (
-    <>
-      <input
-        value={selectedList.listName}
-        onChange={listTitleHandler}
-      />
-      <button
-        type="button"
-        onClick={saveButtonHandler}
-      >
-        Save
-      </button>
-      <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}`)}>Back</button>
-    </>
+    <div className="main-container">
+      <div className="top-color" />
+      <div className="bottom-color" />
+      <div className="input-container">
+        <input
+          className="input-field"
+          value={selectedList.listName}
+          onChange={listTitleHandler}
+        />
+        <button
+          className="save-button"
+          type="button"
+          onClick={saveButtonHandler}
+        >
+          Save
+        </button>
+        {' '}
+
+      </div>
+    </div>
+  // <>
+  //   <input
+  //     value={selectedList.listName}
+  //     onChange={listTitleHandler}
+  //   />
+  //   <button
+  //     type="button"
+  //     onClick={saveButtonHandler}
+  //   >
+  //     Save
+  //   </button>
+  //   <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}`)}>Back</button>
+  // </>
   );
 }
 
