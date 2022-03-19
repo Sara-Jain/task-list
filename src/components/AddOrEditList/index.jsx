@@ -88,19 +88,6 @@ function AddOrEditList({ listData }) {
 
       </div>
     </div>
-  // <>
-  //   <input
-  //     value={selectedList.listName}
-  //     onChange={listTitleHandler}
-  //   />
-  //   <button
-  //     type="button"
-  //     onClick={saveButtonHandler}
-  //   >
-  //     Save
-  //   </button>
-  //   <button type="submit" onClick={() => navigate(`${LISTS_ROUTE}`)}>Back</button>
-  // </>
   );
 }
 

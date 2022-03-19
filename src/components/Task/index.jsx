@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LISTS_ROUTE } from '../../constants/routes';
 import makeRequest from '../utils/makeRequest';
 import { editTaskEndpoint, createTaskEndpoint, getTasksOfListEndpoint } from '../../constants/apiEndpoints';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
 import './Task.css';
 
 function Task() {
@@ -73,23 +73,44 @@ function Task() {
   };
 
   return (
-    <>
-      <input
-        value={selectedTask.title}
-        onChange={taskTitleHandler}
-      />
-      <Button type="button" onClick={saveButtonHandler} buttonText="Save" />
-      {/* <button
-        onClick={saveButtonHandler}
-        type="button"
-      >
-        Save
-      </button> */}
-      <Button type="submit" onClick={() => navigate(`${LISTS_ROUTE}/${listId}`)} buttonText="Back" />
-      {/* <button
-      type="submit"
-      onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button> */}
-    </>
+    <div className="main-container">
+      <div className="top-color" />
+      <div className="bottom-color" />
+      <div className="input-container">
+        <input
+          className="input-field"
+          value={selectedTask.title}
+          onChange={taskTitleHandler}
+        />
+        <button
+          className="save-button"
+          type="button"
+          onClick={saveButtonHandler}
+        >
+          Save
+        </button>
+        {' '}
+
+      </div>
+    </div>
+    // <>
+    //   <input
+    //     value={selectedTask.title}
+    //     onChange={taskTitleHandler}
+    //   />
+    //   <Button type="button" onClick={saveButtonHandler} buttonText="Save" />
+    //   {/* <button
+    //     onClick={saveButtonHandler}
+    //     type="button"
+    //   >
+    //     Save
+    //   </button> */}
+    //   <Button type="submit"
+    // onClick={() => navigate(`${LISTS_ROUTE}/${listId}`)} buttonText="Back" />
+    //   {/* <button
+    //   type="submit"
+    //   onClick={() => navigate(`${LISTS_ROUTE}/${list.id}`)}>Back</button> */}
+    // </>
   );
 }
 
