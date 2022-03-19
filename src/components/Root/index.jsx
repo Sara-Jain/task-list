@@ -6,12 +6,17 @@ import './Root.css';
 function Root() {
   const navigate = useNavigate();
   return (
-    <button
-      onClick={() => navigate(`${LISTS_ROUTE}`)}
-      type="submit"
-    >
-      View all lists
-    </button>
+    <div className="container">
+      <button
+        className="allListButton"
+        onClick={() => navigate(`${LISTS_ROUTE}`)}
+        type="submit"
+      >
+        View all lists
+      </button>
+
+    </div>
+
   );
 }
 

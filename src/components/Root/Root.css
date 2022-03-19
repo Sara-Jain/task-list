@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+    justify-content: center;
+    margin-top: 25%;
+}
+
+.allListButton{
+    border: solid 1px steelblue;
+    font-size: 5em;
+    background-color: black;
+    color: steelblue;
+}
+
+.allListButton:hover{
+    background-color: steelblue;
+    color: black;
+}

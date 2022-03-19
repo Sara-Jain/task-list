@@ -8,6 +8,7 @@ import List from './components/List';
 import Root from './components/Root';
 import AddOrEditList from './components/AddOrEditList';
 import makeRequest from './components/utils/makeRequest';
+import NotFound from './components/NotFound';
 import { GET_LIST_ENDPOINT } from './constants/apiEndpoints';
 import { LISTS_ROUTE, TASKS_ROUTE, ROOT_ROUTE } from './constants/routes';
 
@@ -43,7 +44,7 @@ function App() {
           {/* edit a task */}
           <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/:taskId/edit`} element={<Task listData={allListsData} />} />
 
-          <Route path="*" element={<div>404!Error. Page not found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
