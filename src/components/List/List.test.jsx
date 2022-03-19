@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LISTS from '../../constants/list';
 import { LISTS_ROUTE } from '../../constants/routes';
-import List from './List';
+import List from '.';
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({ useNavigate: () => mockNavigate }));
