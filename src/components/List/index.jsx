@@ -58,7 +58,6 @@ function List() {
         <ul className="listOfItems">
           {availableLists}
         </ul>
-
       </div>
     </div>
   // <div className="listContainer">

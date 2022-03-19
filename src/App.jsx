@@ -37,7 +37,7 @@ function App() {
           {/* edit a list */}
           <Route path={`${LISTS_ROUTE}/:listId/edit`} element={<AddOrEditList listData={allListsData} />} />
           {/* get all tasks of a list */}
-          <Route path={`${LISTS_ROUTE}/:listId`} element={<ListDetails />} />
+          <Route path={`${LISTS_ROUTE}/:listId`} element={<ListDetails listData={allListsData} />} />
           {/* create a new task */}
           <Route path={`${LISTS_ROUTE}/:listId${TASKS_ROUTE}/create`} element={<Task listData={allListsData} />} />
           {/* edit a task */}
