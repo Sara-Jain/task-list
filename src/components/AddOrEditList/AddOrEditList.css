@@ -37,3 +37,13 @@
 .save-button:hover{
     color: black;
 }
+
+@media screen  and (max-width: 500px){
+    .input-container{
+        width: 300px;
+    }
+
+    .input-field{
+        margin-left: 300px;
+    }
+}
