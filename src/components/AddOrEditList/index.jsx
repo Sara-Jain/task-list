@@ -32,7 +32,7 @@ function AddOrEditList({ listData }) {
     if (addList) {
       makeRequest(createListEndpoint, {
         listName: selectedList.listName,
-      }).then(() => {
+      }, navigate).then(() => {
         setAddList(false);
         navigate(`${LISTS_ROUTE}`);
       });
@@ -43,7 +43,7 @@ function AddOrEditList({ listData }) {
     if (editList) {
       makeRequest(editListEndpoint(listId), {
         listName: selectedList.listName,
-      }).then(() => {
+      }, navigate).then(() => {
         setEditList(false);
         navigate(`${LISTS_ROUTE}`);
       });

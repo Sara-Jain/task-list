@@ -12,7 +12,7 @@ function List() {
   const [responseData, setResponseData] = useState([]);
 
   useEffect(() => {
-    makeRequest(GET_LIST_ENDPOINT).then((res) => {
+    makeRequest(GET_LIST_ENDPOINT, {}, navigate).then((res) => {
       setResponseData(res);
     });
   }, []);

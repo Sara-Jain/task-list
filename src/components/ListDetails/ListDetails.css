@@ -19,7 +19,7 @@
 
 .display-container{
     position: absolute;
-    top:35%;
+    top:25%;
     left: 50%;
     -ms-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
@@ -64,6 +64,10 @@ h1{
     .eachTask{
         display: flex;
         justify-content: space-around;
+    }
+
+    .allTasks{
+        width: 200px;
     }
 
     .createButton{
